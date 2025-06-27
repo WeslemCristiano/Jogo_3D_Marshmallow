@@ -1,0 +1,185 @@
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Press Start 2P", cursive;
+  background-color: #111827;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+canvas.game {
+  display: block;
+  background-color: #1b2150;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* CONTROLES */
+#controls {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+#controls > div {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  grid-template-rows: repeat(2, 60px);
+  gap: 12px;
+  pointer-events: auto;
+}
+
+/* Botão para cima no centro superior */
+#forward {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+/* Botões para esquerda, baixo e direita */
+#left {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+#backward {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+#right {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+/* Estilo dos botões */
+#controls button {
+  width: 60px;
+  height: 60px;
+  background-color: #1e40af;
+  border: 3px solid #93c5fd;
+  border-radius: 12px;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 0 #172554;
+  user-select: none;
+}
+
+#controls button:hover {
+  background-color: #3b82f6;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #172554;
+}
+
+#controls button:active {
+  background-color: #2563eb;
+  transform: translateY(0);
+  box-shadow: 0 2px 0 #172554;
+}
+
+/* SCORE */
+#score {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 1.5em;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 10px 20px;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+}
+
+/* TELA DE RESULTADO */
+#result-container {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+}
+
+#result {
+  background-color: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 2px solid #e5e7eb;
+  text-align: center;
+}
+
+#result h1 {
+  margin-bottom: 16px;
+  font-size: 24px;
+}
+
+#result p {
+  margin-bottom: 24px;
+  font-size: 16px;
+}
+
+#retry {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 20px 50px;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#retry:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+#retry:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* DARK MODE */
+@media (prefers-color-scheme: dark) {
+  #score {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #f9fafb;
+  }
+
+  #result {
+    background-color: #1f2937;
+    color: #f9fafb;
+  }
+
+  #retry {
+    background-color: #3b82f6;
+  }
+
+  #retry:hover {
+    background-color: #2563eb;
+  }
+}
