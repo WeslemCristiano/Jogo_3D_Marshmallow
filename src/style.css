@@ -19,12 +19,94 @@ body {
 
 canvas.game {
   display: block;
-  background-color: #1b2150;
+  background-color: #094da759;
   width: 100vw;
   height: 100vh;
 }
 
-/* CONTROLES */
+/* Agrupamento do placar, som e vidas */
+#top-left-ui {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+}
+
+/* Placar */
+#score {
+  font-size: 1.2em;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 10px 20px;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+}
+
+/* Botão de áudio */
+#audio-controls {
+  position: relative;
+}
+
+#mute-btn {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+  transition: all 0.2s ease;
+}
+
+#mute-btn:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Sistema de vidas */
+#lives {
+  display: flex;
+  gap: 5px;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 8px 12px;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+}
+
+.life {
+  font-size: 18px;
+  transition: all 0.3s ease;
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.life.lost {
+  opacity: 0.3;
+  transform: scale(0.8);
+  filter: grayscale(1);
+}
+
+/* Game Info */
+#game-info {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  text-align: right;
+  font-size: 0.9em;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 10px 20px;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+  line-height: 1.5;
+}
+
+/* Controles */
 #controls {
   position: absolute;
   bottom: 20px;
@@ -42,13 +124,11 @@ canvas.game {
   pointer-events: auto;
 }
 
-/* Botão para cima no centro superior */
 #forward {
   grid-column: 2;
   grid-row: 1;
 }
 
-/* Botões para esquerda, baixo e direita */
 #left {
   grid-column: 1;
   grid-row: 2;
@@ -64,14 +144,13 @@ canvas.game {
   grid-row: 2;
 }
 
-/* Estilo dos botões */
 #controls button {
   width: 60px;
   height: 60px;
   background-color: #1e40af;
   border: 3px solid #93c5fd;
   border-radius: 12px;
-  font-size: 16px;
+  font-size: 18px;
   color: white;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -94,30 +173,55 @@ canvas.game {
   box-shadow: 0 2px 0 #172554;
 }
 
-/* SCORE */
-#score {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  font-size: 1.5em;
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-  background-color: rgba(0, 0, 0, 0.3);
-  padding: 10px 20px;
-  border-radius: 8px;
-  backdrop-filter: blur(5px);
+/* Game Over */
+#game-over-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
 }
 
-/* TELA DE RESULTADO */
+#game-over-text {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 48px;
+  color: #ff4444;
+  text-shadow: 0 0 10px #ff4444, 0 0 20px #ff4444;
+  animation: gameOverPulse 1s ease-in-out infinite alternate;
+  text-align: center;
+}
+
+@keyframes gameOverPulse {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
+
+/* Result */
 #result-container {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  visibility: hidden;
   background-color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(5px);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+#result-container.show {
+  visibility: visible;
+  opacity: 1;
 }
 
 #result {
@@ -125,18 +229,9 @@ canvas.game {
   padding: 40px;
   border-radius: 16px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  border: 2px solid #e5e7eb;
   text-align: center;
-}
-
-#result h1 {
-  margin-bottom: 16px;
-  font-size: 24px;
-}
-
-#result p {
-  margin-bottom: 24px;
-  font-size: 16px;
+  color: #111827;
+  border: 2px solid #e5e7eb;
 }
 
 #retry {
@@ -163,23 +258,48 @@ canvas.game {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* DARK MODE */
-@media (prefers-color-scheme: dark) {
-  #score {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #f9fafb;
+/* Contador de reinício */
+#restart-countdown {
+  font-size: 12px;
+  color: #666;
+  margin: 10px 0;
+  font-family: inherit;
+}
+
+#countdown {
+  color: #ff6b6b;
+  font-weight: bold;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  #controls > div {
+    grid-template-columns: repeat(3, 50px);
+    grid-template-rows: repeat(2, 50px);
+    gap: 8px;
   }
 
-  #result {
-    background-color: #1f2937;
-    color: #f9fafb;
+  #controls button {
+    width: 50px;
+    height: 50px;
+    font-size: 14px;
   }
 
-  #retry {
-    background-color: #3b82f6;
+  #score, #game-info {
+    font-size: 0.9em;
+    padding: 6px 12px;
   }
 
-  #retry:hover {
-    background-color: #2563eb;
+  #mute-btn {
+    font-size: 16px;
+    padding: 6px 10px;
+  }
+
+  #lives .life {
+    font-size: 14px;
+  }
+
+  #game-over-text {
+    font-size: 32px;
   }
 }
