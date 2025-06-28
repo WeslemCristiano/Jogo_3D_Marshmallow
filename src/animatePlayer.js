@@ -14,13 +14,13 @@ export function animatePlayer() {
 
   if (!moveClock.running) moveClock.start();
 
-  const stepTime = 0.2; // Seconds it takes to take a step
+  const stepTime = 0.2; // tempo de cada passo em segundos
   const progress = Math.min(1, moveClock.getElapsedTime() / stepTime);
 
   setPosition(progress);
   setRotation(progress);
 
-  // Once a step has ended
+  // Se o progresso for 100%, finalize o passo
   if (progress >= 1) {
     stepCompleted();
     moveClock.stop();

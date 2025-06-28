@@ -3,23 +3,23 @@ import { minTileIndex, maxTileIndex } from "../constants";
 import { metadata as rows } from "../components/Map";
 
 export function endsUpInValidPosition(currentPosition, moves) {
-  // Calculate where the player would end up after the move
+  // Calculo da posição final após os movimentos
   const finalPosition = calculateFinalPosition(
     currentPosition,
     moves
   );
 
-  // Detect if we hit the edge of the board
+  // Detecção de limites do mapa
   if (
     finalPosition.rowIndex === -1 ||
     finalPosition.tileIndex === minTileIndex - 1 ||
     finalPosition.tileIndex === maxTileIndex + 1
   ) {
-    // Invalid move, ignore move command
+    // retorna false se a posição final estiver fora dos limites do mapa
     return false;
   }
 
-  // Detect if we hit a tree
+  // Detecção de colisão com obstáculos
   const finalRow = rows[finalPosition.rowIndex - 1];
   if (
     finalRow &&
@@ -28,7 +28,7 @@ export function endsUpInValidPosition(currentPosition, moves) {
       (tree) => tree.tileIndex === finalPosition.tileIndex
     )
   ) {
-    // Invalid move, ignore move command
+    // retorna false se houver uma árvore na posição final
     return false;
   }
 

@@ -91,6 +91,38 @@ canvas.game {
   filter: grayscale(1);
 }
 
+#lives-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#character-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+}
+
+#character-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3));
+  transition: transform 0.3s ease;
+}
+
+#character-icon:hover img {
+  transform: scale(1.1);
+}
+
 /* Game Info */
 #game-info {
   position: absolute;
@@ -104,6 +136,39 @@ canvas.game {
   border-radius: 8px;
   backdrop-filter: blur(5px);
   line-height: 1.5;
+}
+
+/* Camera Info */
+#camera-info {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  text-align: left;
+  font-size: 0.85em;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 10px 15px;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+  line-height: 1.4;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#camera-info > div {
+  margin: 2px 0;
+}
+
+.camera-help {
+  font-size: 0.75em;
+  opacity: 0.8;
+  margin-top: 5px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 5px;
+}
+
+#camera-distance, #camera-angle {
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 /* Controles */
@@ -290,6 +355,15 @@ canvas.game {
     padding: 6px 12px;
   }
 
+  #camera-info {
+    font-size: 0.75em;
+    padding: 8px 12px;
+  }
+
+  .camera-help {
+    display: none; /* Hide help text on mobile */
+  }
+
   #mute-btn {
     font-size: 16px;
     padding: 6px 10px;
@@ -302,4 +376,29 @@ canvas.game {
   #game-over-text {
     font-size: 32px;
   }
+}
+
+/* Cursor styles for canvas */
+.game {
+  cursor: grab;
+}
+
+.game:active {
+  cursor: grabbing;
+}
+
+/* Camera info hover effects */
+#camera-info:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Smooth transitions for camera values */
+#camera-distance, #camera-angle {
+  transition: color 0.3s ease;
+}
+
+#camera-distance:hover, #camera-angle:hover {
+  color: #4CAF50;
 }

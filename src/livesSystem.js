@@ -1,7 +1,7 @@
 // Lives Management System
 class LivesManager {
     constructor() {
-        this.maxLives = 5;
+        this.maxLives = 3;
         this.currentLives = this.maxLives;
         this.isInvulnerable = false;
         this.invulnerabilityDuration = 2000; // 2 seconds

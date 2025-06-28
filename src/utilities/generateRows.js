@@ -1,3 +1,10 @@
+// Gerar linhas de tráfego para o jogo Crossy Road
+// Este módulo gera linhas de tráfego aleatórias, incluindo carros, caminhões e florest
+// as, com base em um conjunto de regras e parâmetros predefinidos.
+// Ele é usado para criar a dinâmica do jogo, onde o jogador deve evitar obstáculos e coletar itens enquanto navega por um mapa com diferentes tipos de terreno e veículos.
+//// O código utiliza a biblioteca THREE.js para manipulação de objetos 3D e geração de números aleatórios para definir a posição e características dos veículos e árvores.
+// O módulo também define funções auxiliares para gerar linhas de tráfego, veículos e árvores, garantindo que não haja sobreposição entre eles.
+//// Importa a biblioteca THREE.js para manipulação de objetos 3D
 import * as THREE from "three";
 import { minTileIndex, maxTileIndex } from "../constants";
 

@@ -1,4 +1,4 @@
-// Audio System for Crossy Road Game
+// O sistema de audio é projetado para ser leve e eficiente, utilizando os recursos do navegador para criar
 class AudioManager {
     constructor() {
         this.sounds = {};
@@ -7,6 +7,7 @@ class AudioManager {
         this.isMuted = false;
         this.currentMusic = null;
         
+        // Se o usuário já tiver configurado o estado de mudo, carregue-o
         // Load mute state from localStorage
         this.isMuted = localStorage.getItem('crossy-road-muted') === 'true';
         this.musicVolume = parseFloat(localStorage.getItem('crossy-road-music-volume') || '0.3');
@@ -16,6 +17,7 @@ class AudioManager {
     }
 
     initializeAudio() {
+        // Criar o contexto de áudio para a Web Audio API
         // Create audio context for Web Audio API
         try {
             window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -24,11 +26,12 @@ class AudioManager {
             console.warn('Web Audio API não suportado');
         }
 
-        // Initialize sound effects using oscillators (synthetic sounds)
+        // Inicializar efeitos sonoros usando os osciladores (sons sintéticos)
         this.createSyntheticSounds();
     }
 
     createSyntheticSounds() {
+        // Define os sons sintéticos para diferentes eventos do jogo
         // Create synthetic sound effects since we don't have audio files
         this.sounds = {
             move: () => this.playTone(220, 0.1, 'square'),
@@ -65,7 +68,6 @@ class AudioManager {
     playCollisionSound() {
         if (this.isMuted || !this.audioContext) return;
 
-        // Create crash sound with multiple frequencies
         const frequencies = [80, 120, 200, 300];
         frequencies.forEach((freq, index) => {
             setTimeout(() => {
@@ -77,8 +79,7 @@ class AudioManager {
     playBonusSound() {
         if (this.isMuted || !this.audioContext) return;
 
-        // Ascending arpeggio for bonus
-        const notes = [261.63, 329.63, 392.00, 523.25]; // C, E, G, C (major chord)
+        const notes = [261.63, 329.63, 392.00, 523.25]; // C, E, G, C 
         notes.forEach((freq, index) => {
             setTimeout(() => {
                 this.playTone(freq, 0.2, 'sine', 0.4);
@@ -89,7 +90,6 @@ class AudioManager {
     playMilestoneSound() {
         if (this.isMuted || !this.audioContext) return;
 
-        // Fanfare-like sound
         const melody = [523.25, 659.25, 783.99, 1046.50]; // C, E, G, C (higher octave)
         melody.forEach((freq, index) => {
             setTimeout(() => {
@@ -101,7 +101,6 @@ class AudioManager {
     playGameStartSound() {
         if (this.isMuted || !this.audioContext) return;
 
-        // Rising scale
         const startMelody = [261.63, 293.66, 329.63, 349.23, 392.00]; // C, D, E, F, G
         startMelody.forEach((freq, index) => {
             setTimeout(() => {
@@ -113,7 +112,6 @@ class AudioManager {
     playGameOverSound() {
         if (this.isMuted || !this.audioContext) return;
 
-        // Descending dramatic scale
         const gameOverMelody = [392.00, 369.99, 329.63, 293.66, 261.63]; // G, F#, E, D, C
         gameOverMelody.forEach((freq, index) => {
             setTimeout(() => {
@@ -125,7 +123,6 @@ class AudioManager {
     playBackgroundMusic() {
         if (this.isMuted || !this.audioContext || this.currentMusic) return;
 
-        // Simple background melody loop
         const melody = [
             261.63, 293.66, 329.63, 293.66, // C, D, E, D
             261.63, 293.66, 329.63, 349.23, // C, D, E, F
@@ -145,7 +142,6 @@ class AudioManager {
             });
         };
 
-        // Play melody and loop
         playMelody();
         this.currentMusic = setInterval(playMelody, melody.length * 500);
     }
@@ -185,7 +181,6 @@ class AudioManager {
     }
 
     resumeAudioContext() {
-        // Resume audio context on user interaction (required by browsers)
         if (this.audioContext && this.audioContext.state === 'suspended') {
             this.audioContext.resume();
         }
@@ -193,8 +188,6 @@ class AudioManager {
 
     playLoseLifeSound() {
         if (this.isMuted || !this.audioContext) return;
-
-        // Sad descending tone for losing a life
         const sadMelody = [392.00, 349.23, 293.66]; // G, F, D
         sadMelody.forEach((freq, index) => {
             setTimeout(() => {
@@ -205,12 +198,9 @@ class AudioManager {
 
     playDramaticPauseSound() {
         if (this.isMuted || !this.audioContext) return;
-
-        // Dramatic low tone that builds tension
-        const dramaticTone = 130.81; // Low C
+        const dramaticTone = 130.81; // C
         this.playTone(dramaticTone, 1.5, 'triangle', 0.3);
-        
-        // Add some harmonic tension
+    
         setTimeout(() => {
             this.playTone(dramaticTone * 1.25, 0.8, 'triangle', 0.2);
         }, 500);

@@ -1,3 +1,6 @@
+// Se não houver colisão, retorna true
+
+
 export function calculateFinalPosition(currentPosition, moves) {
   return moves.reduce((position, direction) => {
     if (direction === "forward")
